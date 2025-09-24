@@ -1,0 +1,73 @@
+<!-- Main Content -->
+    <div class="container mx-auto px-4 py-10">
+        <div class="bg-white rounded-lg shadow p-6 max-w-3xl mx-auto">
+            <h1 class="text-2xl font-bold text-center mb-6">แดชบอร์ด</h1>
+
+            <!-- Toggle -->
+            <div class="flex justify-center mb-6">
+                <div class="relative flex bg-gray-300 rounded-full w-60 h-10">
+                    <div class="absolute bg-red-500 rounded-full h-8 w-1/2 top-1 left-1 transition-all duration-300 z-0" id="indicator"></div>
+                    <div class="flex w-full z-10">
+                        <button class="flex-1 text-center font-bold rounded-full toggle-option" id="btn-materials" onclick="selectOption('materials')">วัสดุ</button>
+                        <button class="flex-1 text-center font-bold rounded-full toggle-option" id="btn-equipments" onclick="selectOption('equipments')">ครุภัณฑ์</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action -->
+            <div class="text-center mb-4">
+                <button onclick="showItems()" class="bg-orange-500 text-white px-6 py-2 rounded-lg hover:bg-orange-600">ดูรายการ</button>
+            </div>
+
+            <!-- Lists -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Materials -->
+                <div class="hidden" id="materials-card">
+                    <h2 class="text-lg font-semibold text-center mb-2">รายการวัสดุ</h2>
+                    <table class="w-full text-left border">
+                        <thead class="bg-gray-100">
+                            <tr>
+                                <th class="py-2 px-4">ชื่อวัสดุ</th>
+                                <th class="py-2 px-4">คงเหลือ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse($materials as $material)
+                                <tr class="border-t">
+                                    <td class="py-2 px-4">{{ $material->name }}</td>
+                                    <td class="py-2 px-4">{{ $material->stock }}</td>
+                                </tr>
+                            @empty
+                                <tr><td colspan="2" class="text-center py-2">ไม่มีวัสดุให้เบิก</td></tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Equipments -->
+                <div class="hidden" id="equipments-card">
+                    <h2 class="text-lg font-semibold text-center mb-2">รายการครุภัณฑ์</h2>
+                    <table class="w-full text-left border">
+                        <thead class="bg-gray-100">
+                            <tr>
+                                <th class="py-2 px-4">ชื่อครุภัณฑ์</th>
+                                <th class="py-2 px-4">สถานะ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse($equipments as $equipment)
+                                <tr class="border-t">
+                                    <td class="py-2 px-4">{{ $equipment->name }}</td>
+                                    <td class="py-2 px-4">
+                                        {{ $equipment->available ? 'พร้อมยืม' : 'ไม่พร้อมยืม' }}
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr><td colspan="2" class="text-center py-2">ไม่มีครุภัณฑ์ให้ยืม</td></tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
